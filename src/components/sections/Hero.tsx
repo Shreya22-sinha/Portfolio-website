@@ -14,13 +14,13 @@ export function Hero() {
 
   return (
     <section id="hero" className="section" aria-labelledby="hero-name">
-      <div className="section-inner grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
-        <div>
-          <ul className="mb-8 flex flex-wrap gap-3">
+      <div className="section-inner grid min-w-0 items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+        <div className="min-w-0">
+          <ul className="mb-8 flex w-full min-w-0 flex-wrap gap-x-3 gap-y-3.5">
             {hero.tags.map((tag, index) => (
               <li
                 key={tag.label}
-                className={index === 0 ? "md:-rotate-[1.2deg]" : undefined}
+                className={`shrink-0 ${index === 0 ? "md:-rotate-[1.2deg]" : ""}`.trim()}
               >
                 <Tag fill={tag.fill} press>
                   {tag.label}

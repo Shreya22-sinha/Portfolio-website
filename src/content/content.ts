@@ -59,9 +59,9 @@ export type IconName =
 export const site = {
   name: "Shreya Sinha",
   monogram: "SS",
-  title: "Shreya Sinha — Backend Engineer, UPI Payments",
+  title: "Shreya Sinha — Product, Payments & Applied AI",
   description:
-    "Backend engineer on UPI payments infrastructure at NPST, moving toward product and applied-ML work.",
+    "Turning live UPI payments and applied AI into product decisions people can trust and use.",
   /** Replace with the production origin before launch. */
   url: "TODO",
   email: "shreyasinha22052003@gmail.com",
@@ -74,7 +74,7 @@ export const site = {
   skipToContent: "Skip to content",
   portrait: {
     src: "/portrait.jpg",
-    alt: "Portrait of Shreya Sinha, a backend engineer",
+    alt: "Portrait of Shreya Sinha",
     fallbackLabel: "Portrait",
   },
 };
@@ -94,17 +94,17 @@ export const nav = {
 
 export const hero = {
   tags: [
-    { label: "Payments", fill: "clay" },
-    { label: "Applied ML", fill: "teal" },
-    { label: "Research", fill: "ochre" },
+    { label: "Product", fill: "clay" },
+    { label: "Payments", fill: "teal" },
+    { label: "Applied AI", fill: "ochre" },
     { label: "Teaching", fill: "sage" },
   ] satisfies { label: string; fill: Accent }[],
   name: "Shreya Sinha",
   roleLines: [
-    "Backend engineer — UPI payments infrastructure",
-    "Building toward product",
+    "Payments & applied AI",
+    "Turning technical work into product decisions",
   ],
-  body: "I work on money-movement infrastructure at NPST, where features ship into live merchant and consumer payment flows. I'm most interested in the point where a technical decision becomes a user or business trade-off — which is the work I'm moving toward.",
+  body: "I work where technology meets the people who depend on it — on a live UPI payments platform at NPST, and on AI systems that have to earn trust before they earn adoption. The part I care about is the decision: where a fraud model should trade precision for recall, and why a traffic AI nobody can question is one nobody will use. I'm moving into product management to make those calls full-time.",
   primaryCta: { label: "See the work", href: "/#work" },
   secondaryCta: { label: "Download résumé", href: "/shreya-sinha-resume.pdf" },
 };
@@ -113,13 +113,13 @@ export const pillarsHeading = "Focus areas";
 
 export const pillars: Pillar[] = [
   {
-    title: "Payments infrastructure",
-    body: "Shipping production features on a live UPI platform within the first month. Tracing transaction data discrepancies across services and databases before they reach real payment flows.",
+    title: "Payments",
+    body: "Working on a live UPI platform used by real merchants and consumers. Catching transaction data discrepancies before they reach users, and taking findings to Product, QA and Business in every sprint review.",
     fill: "teal",
     icon: "payments",
   },
   {
-    title: "Applied machine learning",
+    title: "Applied AI",
     body: "Fraud detection and computer-vision systems taken past the notebook: compared, selected, documented and shipped as APIs with validation and structured logging.",
     fill: "clay",
     icon: "ml",
@@ -193,13 +193,13 @@ export const about = {
       heading: "Toolkit",
       fill: "ochre" as Accent,
       items: [
+        "Metric definition",
+        "Trade-off analysis",
+        "Success criteria",
+        "Communicating technical work to non-technical teams",
+        "SQL & data analysis",
         "Python",
-        "SQL",
-        "FastAPI",
-        "PostgreSQL",
         "PyTorch",
-        "Docker",
-        "Metric definition & trade-off analysis",
       ],
     },
   },
@@ -326,7 +326,11 @@ export function personJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: site.name,
-    jobTitle: "Backend Engineer",
+    jobTitle: "Software Engineer",
+    worksFor: {
+      "@type": "Organization",
+      name: "NPST",
+    },
     description: site.description,
     email: site.email,
     ...(site.url !== "TODO" ? { url: site.url } : {}),
