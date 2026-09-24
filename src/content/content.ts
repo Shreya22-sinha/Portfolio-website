@@ -22,7 +22,6 @@ export type EducationItem = {
 
 export type ResearchItem = {
   title: string;
-  authors: string;
   venue: string;
   status: "Accepted" | "Communicated";
   note: string;
@@ -237,27 +236,23 @@ export const about = {
         {
           title:
             "A Real-Time AI-Driven Traffic Management System using Deep Vision and Context-Aware AI",
-          authors: "S. Sinha, L. Hota, K. K. Senapati, P. Paul",
-          venue:
-            "4th International Conference on Innovation in Engineering & Management (ICIEM'26), BIT Noida, 2026",
+          venue: "ICIEM'26, BIT Noida",
           status: "Accepted",
-          note: "Turned traffic images into congestion alerts and rerouting advice; YOLOv8 chosen after benchmarking four models at 96.1% mAP@50.",
+          note: "YOLOv8 chosen after benchmarking four models at 96.1% mAP@50.",
         },
         {
           title:
             "SmartTraffic AI: A Real-Time Adaptive Traffic Signal Control System",
-          authors: "S. Sinha, L. Hota, K. K. Senapati, A. Kumar",
           venue: "IEEE Transactions on Networking, 2026",
           status: "Communicated",
-          note: "A camera-only adaptive signal system cut simulated intersection wait time 38.1% on low-cost hardware.",
+          note: "Camera-only adaptive signals cut simulated wait time 38.1%.",
         },
         {
           title:
             "SmartTraffic AI for a Real-Time Adaptive Traffic Signal Control System",
-          authors: "S. Sinha, L. Hota, K. K. Senapati",
-          venue: "2026 IEEE Future Networks World Forum (FNWF), 2026",
+          venue: "IEEE Future Networks World Forum, 2026",
           status: "Communicated",
-          note: "Plain-language local explanations raised operator confidence in AI signal decisions to 87% across 200 feedback rounds.",
+          note: "Plain-language explanations raised operator confidence to 87%.",
         },
       ] satisfies ResearchItem[],
     },

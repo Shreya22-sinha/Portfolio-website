@@ -13,7 +13,7 @@ export function About() {
           {about.heading}
         </SectionHeading>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2 lg:grid-cols-4">
           <Card fill={education.fill} press={false} className="p-5">
             <h3 className="eyebrow mb-4">{education.heading}</h3>
             <ul className="flex flex-col gap-3">
@@ -47,8 +47,6 @@ export function About() {
                 {research.items.map((item) => (
                   <li key={item.title} className="frame-flat bg-paper p-4">
                     <p className="text-sm font-medium leading-snug">{item.title}</p>
-                    <p className="mt-2 text-sm">{item.note}</p>
-                    <p className="mt-2 text-sm">{item.authors}</p>
                     <p className="mt-2 text-sm">
                       {item.venue}
                       <span className="mx-2" aria-hidden="true">
@@ -56,6 +54,7 @@ export function About() {
                       </span>
                       <span className="eyebrow inline">{item.status}</span>
                     </p>
+                    <p className="mt-2 text-sm">{item.note}</p>
                   </li>
                 ))}
               </ul>
@@ -64,10 +63,12 @@ export function About() {
 
           <Card fill={toolkit.fill} press={false} className="p-5">
             <h3 className="eyebrow mb-4">{toolkit.heading}</h3>
-            <ul className="flex flex-wrap gap-2">
+            <ul className="flex flex-wrap gap-x-2 gap-y-3.5 pb-1.5">
               {toolkit.items.map((item) => (
-                <li key={item}>
-                  <Tag fill="paper">{item}</Tag>
+                <li key={item} className="shrink-0">
+                  <Tag fill="paper" className="whitespace-nowrap">
+                    {item}
+                  </Tag>
                 </li>
               ))}
             </ul>
