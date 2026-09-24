@@ -41,12 +41,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: site.locale,
     siteName: site.name,
+    images: [{ url: site.portrait.src }],
     ...(metadataBase ? { url: metadataBase } : {}),
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
+    images: [site.portrait.src],
   },
 };
 

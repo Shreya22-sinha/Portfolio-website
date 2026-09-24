@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { work, type WorkItem } from "@/content/content";
+import { work, type CaseStudyFigure, type WorkItem } from "@/content/content";
+import { Figure } from "@/components/ui/Figure";
+import { FigureRow } from "@/components/ui/FigureRow";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Tag } from "@/components/ui/Tag";
 import { bgClass } from "@/components/ui/accents";
@@ -42,11 +44,66 @@ export function CaseStudy({ item }: CaseStudyProps) {
                 {section.heading}
               </h2>
               <p className="prose-body text-base">{section.body}</p>
+              {section.figures?.map((figure, index) => (
+                <div key={`${section.heading}-${index}`} className="mt-6">
+                  <CaseStudyFigures figure={figure} />
+                </div>
+              ))}
             </section>
           ))}
         </div>
       </div>
     </article>
+  );
+}
+
+function CaseStudyFigures({ figure }: { figure: CaseStudyFigure }) {
+  if (figure.kind === "single") {
+    return (
+      <Figure
+        src={figure.image.src}
+        alt={figure.image.alt}
+        caption={figure.image.caption ?? ""}
+        width={figure.image.width}
+        height={figure.image.height}
+      />
+    );
+  }
+
+  if (figure.kind === "grid") {
+    const sizes =
+      figure.columns === 2
+        ? "(max-width: 768px) calc(100vw - 48px), 360px"
+        : "(max-width: 768px) calc(100vw - 48px), 240px";
+    const grid =
+      figure.columns === 2
+        ? "grid grid-cols-1 gap-5 md:grid-cols-2"
+        : "grid grid-cols-1 gap-5 md:grid-cols-3";
+
+    return (
+      <div className={grid}>
+        {figure.images.map((image) => (
+          <Figure
+            key={image.src}
+            src={image.src}
+            alt={image.alt}
+            caption={image.caption ?? ""}
+            width={image.width}
+            height={image.height}
+            sizes={sizes}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <FigureRow
+      images={figure.images}
+      caption={figure.caption}
+      columns={figure.columns}
+      contain={figure.contain}
+    />
   );
 }
 

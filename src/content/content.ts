@@ -38,10 +38,67 @@ export type WorkItem = {
   sections: CaseStudySection[];
 };
 
+export type CaseStudyImage = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+};
+
+export type CaseStudyFigure =
+  | { kind: "single"; image: CaseStudyImage }
+  | {
+      kind: "grid";
+      images: CaseStudyImage[];
+      columns: 2 | 3;
+    }
+  | {
+      kind: "row";
+      images: CaseStudyImage[];
+      caption: string;
+      columns?: 2 | 3;
+      contain?: boolean;
+    };
+
 export type CaseStudySection = {
   heading: string;
   body: string;
+  figures?: CaseStudyFigure[];
 };
+
+export const caseStudyMedia = {
+  trafficLow: {
+    src: "/case-studies/traffic-low.png",
+    width: 822,
+    height: 1418,
+  },
+  trafficModerate: {
+    src: "/case-studies/traffic-moderate.png",
+    width: 798,
+    height: 1359,
+  },
+  trafficClear: {
+    src: "/case-studies/traffic-clear.png",
+    width: 799,
+    height: 1308,
+  },
+  vibeshelfHome: {
+    src: "/case-studies/vibeshelf-home.webp",
+    width: 1600,
+    height: 722,
+  },
+  vibeshelfSearch: {
+    src: "/case-studies/vibeshelf-search.webp",
+    width: 1600,
+    height: 720,
+  },
+  vibeshelfTaste: {
+    src: "/case-studies/vibeshelf-taste.webp",
+    width: 1600,
+    height: 659,
+  },
+} as const;
 
 export type ContactLink = {
   label: string;
@@ -232,9 +289,6 @@ const caseStudyHeadings = {
   outcome: "Outcome",
 };
 
-const todo = (heading: string) =>
-  `TODO: write the ${heading.toLowerCase()} for this case study.`;
-
 export const work = {
   id: "work",
   heading: "Featured work",
@@ -254,12 +308,24 @@ export const work = {
       sections: [
         {
           heading: caseStudyHeadings.context,
-          body: "Compared Isolation Forest, One-Class SVM and autoencoders across precision, recall, F1 and AUC-ROC on ~100K transactions. The real decision wasn't best accuracy — it was where to sit on the precision/recall curve given what a false positive costs a risk team. Shipped as a documented REST API.",
+          body: "A fraud detection system built on a dataset of roughly 100,000 transactions, of which about 2% were fraudulent. That imbalance is the whole problem. At a 2% positive class, a model that flags nothing at all scores 98% accuracy and catches zero fraud, so the first real decision was to throw accuracy out as a metric and work out what the system was actually for.",
         },
-        { heading: caseStudyHeadings.decision, body: todo(caseStudyHeadings.decision) },
-        { heading: caseStudyHeadings.choice, body: todo(caseStudyHeadings.choice) },
-        { heading: caseStudyHeadings.cost, body: todo(caseStudyHeadings.cost) },
-        { heading: caseStudyHeadings.outcome, body: todo(caseStudyHeadings.outcome) },
+        {
+          heading: caseStudyHeadings.decision,
+          body: "Accuracy was actively misleading here, so the real question was where to set the operating point. Every missed fraud is a direct loss. Every false alarm costs a risk analyst's time and can block a legitimate customer mid-transaction. I had to decide which of those two errors the business could better absorb, then pick a model that held up at that point rather than one that topped a leaderboard.",
+        },
+        {
+          heading: caseStudyHeadings.choice,
+          body: "I benchmarked Isolation Forest, One-Class SVM and an autoencoder on precision, recall, F1 and AUC-ROC — never accuracy. Then I set the operating point before picking a winner, because the threshold is the product decision and the model is just what serves it. I weighted toward recall: a missed fraud is an unrecoverable loss, while a false positive costs analyst time, which is real but bounded and reversible. The binding constraint was review capacity — there is no point catching more fraud than a risk team can actually work through — so the threshold sits where alert volume stays inside what a human queue can absorb. I shipped the result as a documented REST API with request validation and structured logging, because a risk team can only act on a model it can plug into its own systems and audit afterwards.",
+        },
+        {
+          heading: caseStudyHeadings.cost,
+          body: "Favouring recall means accepting more false positives, which pushes load onto human reviewers and adds friction for genuine customers — a legitimate transaction held for review is a bad experience even when the review clears it. The threshold is also tied to an assumption about review capacity that I estimated rather than measured against a real team's throughput. And the time spent hardening the API, validation and logging was time not spent squeezing further gains out of the model. I would make that trade again, but it is a trade.",
+        },
+        {
+          heading: caseStudyHeadings.outcome,
+          body: "A production-ready fraud-scoring API with request validation and structured logging, built on a benchmark across three anomaly-detection approaches with an operating point chosen from error costs rather than from a metric. The takeaway I carry out of it: model selection is a business decision about which error you can afford, not a leaderboard position. The headline accuracy figure — 98% — was the one number that meant nothing.",
+        },
       ],
     },
     {
@@ -273,12 +339,47 @@ export const work = {
       sections: [
         {
           heading: caseStudyHeadings.context,
-          body: "A Deep Q-Network controlling three signal phases from a real-time vision pipeline cut average wait time 30% and raised throughput 25% over a fixed-timer baseline. But operators won't adopt decisions they can't interrogate, so a locally hosted LLaMA 3 layer translates every signal decision into plain language.",
+          body: "An adaptive traffic signal system that reads a live camera feed, counts and classifies vehicles on each approach with YOLOv8, and hands that state to a Deep Q-Network controlling the signal phases. YOLOv8 was chosen after benchmarking four detection models, at 96.1% mAP@50. Against a fixed-timer baseline the system cut average wait time 30% and raised throughput 25%, running at roughly 90% detection accuracy.",
         },
-        { heading: caseStudyHeadings.decision, body: todo(caseStudyHeadings.decision) },
-        { heading: caseStudyHeadings.choice, body: todo(caseStudyHeadings.choice) },
-        { heading: caseStudyHeadings.cost, body: todo(caseStudyHeadings.cost) },
-        { heading: caseStudyHeadings.outcome, body: todo(caseStudyHeadings.outcome) },
+        {
+          heading: caseStudyHeadings.decision,
+          body: "The Deep Q-Network already beat the fixed-timer baseline, so the open question was what to do next: keep optimising the model, or address the reason it might never be used at all. Traffic operators are accountable for what happens at a junction. They will not hand phase control to a system whose decisions they cannot question — and an unexplained model that is right 90% of the time is harder to defend than a fixed timer that is predictable and wrong.",
+        },
+        {
+          heading: caseStudyHeadings.choice,
+          body: "I prioritised adoption over further performance gains. I added a locally hosted LLaMA 3 layer that turns every signal decision into a plain-language advisory — 'allow right road to clear congestion' — shown next to the raw vehicle distribution across all four approaches, so an operator can check the reasoning against what they can see out of the window. Local hosting rather than a cloud API was deliberate: signal control at a junction cannot depend on an external service being reachable, and keeping camera-derived data on-premise avoids both the latency and the privacy questions that come with sending live road imagery off-site. I also added a feedback control — operators mark each decision good or bad — so the confidence figure on screen reflects what operators actually endorsed rather than what the model believed about itself.",
+          figures: [
+            {
+              kind: "row",
+              contain: true,
+              columns: 3,
+              caption:
+                "The same system on three junctions. Each decision appears beside the vehicle distribution it was made from, so an operator can check the call against what they can see — and the confidence figure tracks operator feedback, not the model's own certainty.",
+              images: [
+                {
+                  ...caseStudyMedia.trafficLow,
+                  alt: "Traffic system on a low-congestion junction: 18 vehicles detected, green phase, 10-second wait, advisory to allow the right road to clear.",
+                },
+                {
+                  ...caseStudyMedia.trafficModerate,
+                  alt: "Moderate congestion: 24 vehicles detected, red phase, 30-second wait, advisory to allow the left road to clear.",
+                },
+                {
+                  ...caseStudyMedia.trafficClear,
+                  alt: "Empty junction: zero vehicles detected, advisory reading 'Road is clear. No congestion.'",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          heading: caseStudyHeadings.cost,
+          body: "The explanation layer adds compute and a second system to maintain on top of a vision pipeline that already has to run in real time. It also introduces a risk the model alone did not have: an explanation that reads convincingly but does not reflect the state and action values the network actually used. Keeping the advisory bound tightly to the numbers shown alongside it mitigates that, but it stays a live concern rather than a solved one. And all of it was engineering time that could have gone into tuning the DQN further — a straight trade of measurable performance for something harder to measure.",
+        },
+        {
+          heading: caseStudyHeadings.outcome,
+          body: "30% lower average wait time and 25% higher throughput than the fixed-timer baseline at roughly 90% detection accuracy, with every decision now carrying a rationale a human can read. Operator confidence reached 87% across 200 feedback rounds. The work produced three papers: one accepted at ICIEM'26 (BIT Noida), and two communicated — to IEEE Transactions on Networking and IEEE Future Networks World Forum 2026.",
+        },
       ],
     },
     {
@@ -293,6 +394,26 @@ export const work = {
         {
           heading: caseStudyHeadings.context,
           body: "Mind the Product's World Product Day hackathon, June 2026 — two people, one weekend. My teammate Chaitanya framed the product: every recommender makes you speak its vocabulary, genres and categories and star ratings, when what people actually say is 'something cozy but not boring'. His reframe was that the failure sits upstream in the input — a translation problem, not a ranking problem. I owned the backend that had to make that idea hold up as a working product: Express.js APIs, authentication, shelves and lists, and the scoring layer turning the model's tags into ranked results across 547 hand-curated books, films and games.",
+          figures: [
+            {
+              kind: "grid",
+              columns: 2,
+              images: [
+                {
+                  ...caseStudyMedia.vibeshelfHome,
+                  alt: "Vibeshelf landing page: 'Your next obsession is one vibe away', with Books, Movies & TV and Games entry points.",
+                  caption:
+                    "The entire product is one input — describe a feeling, in any words.",
+                },
+                {
+                  ...caseStudyMedia.vibeshelfSearch,
+                  alt: "Vibeshelf film search: a free-text vibe box with example prompts and a grid of genre tags, matching against 547 curated titles.",
+                  caption:
+                    "Plain-language vibe in, ranked matches out. The tag grid is the fallback for people who would rather not type.",
+                },
+              ],
+            },
+          ],
         },
         {
           heading: caseStudyHeadings.decision,
@@ -301,6 +422,17 @@ export const work = {
         {
           heading: caseStudyHeadings.choice,
           body: "I tuned the adjustment deliberately low and made the effect cumulative rather than immediate — several consistent signals move the ranking, one outlier doesn't. The reasoning was about trust more than accuracy. A recommender that visibly overreacts to a single click feels broken in a way a slightly slow one doesn't: a user who watches a whole category disappear concludes the system is wrong, while a user who sees results drift gradually concludes it's learning. The LLM layer needed the same defensive posture — Llama 3.3-70B returned JSON that was mostly well-formed and occasionally not, so the backend parses loosely and falls back instead of failing the request.",
+          figures: [
+            {
+              kind: "single",
+              image: {
+                ...caseStudyMedia.vibeshelfTaste,
+                alt: "Vibeshelf taste profile: a genre affinity radar chart beside ranked affinity bars, from Sci-Fi & Futuristic at 100% down to Epic Fantasy at 12%.",
+                caption:
+                  "The taste profile is the re-ranker made visible. Every thumbs up or down nudges these weights — and the calibration decision is exactly why a single rating moves one bar a little instead of flattening it.",
+              },
+            },
+          ],
         },
         {
           heading: caseStudyHeadings.cost,

@@ -214,3 +214,21 @@ body {
 .underline-bar[data-accent="paper"] {
   --underline: var(--paper);
 }
+
+.figure-frame {
+  border: var(--border-w) solid var(--ink);
+  border-radius: 0;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.figure-caption {
+  border-top: var(--border-w) solid var(--ink);
+  background: var(--paper);
+  font-family: var(--font-work), ui-sans-serif, sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: 10px 12px;
+}

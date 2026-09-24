@@ -28,11 +28,13 @@ export async function generateMetadata({
       title: `${item.title} — ${site.name}`,
       description: item.summary,
       type: "article",
+      images: [{ url: site.portrait.src }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${item.title} — ${site.name}`,
       description: item.summary,
+      images: [site.portrait.src],
     },
   };
 }
