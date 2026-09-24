@@ -136,9 +136,9 @@ export const site = {
   skipToContent: "Skip to content",
   portrait: {
     src: "/portrait.jpg",
-    heroSrc: "/portrait-v2.png",
-    heroWidth: 312,
-    heroHeight: 390,
+    heroSrc: "/portrait-v3.png",
+    heroWidth: 402,
+    heroHeight: 504,
     alt: "Portrait of Shreya Sinha",
     fallbackLabel: "Portrait",
   },
