@@ -78,12 +78,12 @@ export function Icon({ name, className }: IconProps) {
           <path d="M10 18v4M14 18v4" />
         </Svg>
       );
-    case "integrity":
+    case "shelf":
       return (
         <Svg className={className}>
-          <path d="M4 16V8h6l2 3h8v5" />
-          <path d="M4 16h16" />
-          <path d="M8 16v3M16 16v3" />
+          <path d="M4 5h16v14H4z" />
+          <path d="M4 10h16M4 15h16" />
+          <path d="M8 5v5M12 10v5M9 15v4" />
         </Svg>
       );
     case "arrow":

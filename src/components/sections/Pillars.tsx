@@ -13,13 +13,14 @@ export function Pillars() {
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((pillar, index) => (
             <div
-              key={pillar.title}
+              key={pillar.id}
               className={index === 2 ? "md:-rotate-[1deg]" : undefined}
             >
               <Card
+                id={pillar.id}
                 fill={pillar.fill}
                 as="article"
-                className="flex h-full flex-col gap-4 p-5"
+                className="anchor-target flex h-full flex-col gap-4 p-5"
               >
                 <IconBox>
                   <Icon name={pillar.icon} />

@@ -14,7 +14,7 @@ const archivoBlack = Archivo_Black({
 });
 
 const workSans = Work_Sans({
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
   variable: "--font-work",
   display: "swap",

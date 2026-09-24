@@ -6,6 +6,7 @@ export type NavLink = {
 };
 
 export type Pillar = {
+  id: string;
   title: string;
   body: string;
   fill: Accent;
@@ -23,7 +24,8 @@ export type ResearchItem = {
   title: string;
   authors: string;
   venue: string;
-  status: "Accepted" | "Submitted";
+  status: "Accepted" | "Communicated";
+  note: string;
 };
 
 export type WorkItem = {
@@ -53,7 +55,7 @@ export type IconName =
   | "teaching"
   | "fraud"
   | "traffic"
-  | "integrity"
+  | "shelf"
   | "arrow";
 
 export const site = {
@@ -61,7 +63,7 @@ export const site = {
   monogram: "SS",
   title: "Shreya Sinha — Product, Payments & Applied AI",
   description:
-    "Turning live UPI payments and applied AI into product decisions people can trust and use.",
+    "Product-minded engineer working on banking platform access control and applied AI — and the trade-offs behind both.",
   /** Replace with the production origin before launch. */
   url: "TODO",
   email: "shreyasinha22052003@gmail.com",
@@ -69,7 +71,7 @@ export const site = {
   linkedin: null as string | null,
   /** Replace with the public GitHub profile URL. */
   github: null as string | null,
-  resumeHref: "/shreya-sinha-resume.pdf",
+  resumeHref: "/shreya-sinha-resume-v2.pdf",
   locale: "en_IN",
   skipToContent: "Skip to content",
   portrait: {
@@ -94,43 +96,47 @@ export const nav = {
 
 export const hero = {
   tags: [
-    { label: "Product", fill: "clay" },
-    { label: "Payments", fill: "teal" },
-    { label: "Applied AI", fill: "ochre" },
-    { label: "Teaching", fill: "sage" },
-  ] satisfies { label: string; fill: Accent }[],
+    { label: "Product", fill: "clay", href: "/#work" },
+    { label: "Payments", fill: "teal", href: "/#pillar-payments" },
+    { label: "Applied AI", fill: "ochre", href: "/#pillar-ai" },
+    { label: "Teaching", fill: "sage", href: "/#pillar-teaching" },
+  ] satisfies { label: string; fill: Accent; href: string }[],
   name: "Shreya Sinha",
   roleLines: [
     "Payments & applied AI",
     "Turning technical work into product decisions",
   ],
-  body: "I work where technology meets the people who depend on it — on a live UPI payments platform at NPST, and on AI systems that have to earn trust before they earn adoption. The part I care about is the decision: where a fraud model should trade precision for recall, and why a traffic AI nobody can question is one nobody will use. I'm moving into product management to make those calls full-time.",
+  body: "I work where technology meets the people who depend on it — designing authentication and access control for a 54-feature banking platform at NPST, and building AI systems that have to earn trust before they earn adoption. The part I care about is the decision: where a fraud model should sit on the precision/recall curve, and why a traffic AI nobody can question is one nobody will use. I'm moving into product management to make those calls full-time.",
   primaryCta: { label: "See the work", href: "/#work" },
-  secondaryCta: { label: "Download résumé", href: "/shreya-sinha-resume.pdf" },
+  secondaryCta: { label: "Download résumé", href: site.resumeHref },
 };
 
 export const pillarsHeading = "Focus areas";
 
 export const pillars: Pillar[] = [
   {
+    id: "pillar-payments",
     title: "Payments",
-    body: "Working on a live UPI platform used by real merchants and consumers. Catching transaction data discrepancies before they reach users, and taking findings to Product, QA and Business in every sprint review.",
+    body: "Designed authentication and role-based access control for a 54-feature banking platform — OTP and biometric login, three admin roles, maker-checker approval — working across mobile, web and backend teams. Also led problem framing for a 22-member team during a six-department rotation.",
     fill: "teal",
     icon: "payments",
   },
   {
+    id: "pillar-ai",
     title: "Applied AI",
-    body: "Fraud detection and computer-vision systems taken past the notebook: compared, selected, documented and shipped as APIs with validation and structured logging.",
+    body: "Fraud detection and computer-vision systems taken past the notebook: benchmarked, thresholded against real business cost, and shipped as documented APIs with validation and structured logging.",
     fill: "clay",
     icon: "ml",
   },
   {
+    id: "pillar-research",
     title: "Research",
-    body: "Three papers on adaptive traffic signal control — one accepted at ICIEM'26, two submitted to IEEE venues.",
+    body: "Three papers on adaptive traffic signal control — one accepted at ICIEM'26, two communicated to IEEE venues. A camera-only system that cut simulated intersection wait time 38.1% on low-cost hardware.",
     fill: "ochre",
     icon: "research",
   },
   {
+    id: "pillar-teaching",
     title: "Teaching",
     body: "120+ students across Classes 7–11 at a government girls' school, adapting lesson plans per grade and iterating on classroom feedback. Pass rate up 10%.",
     fill: "sage",
@@ -160,6 +166,15 @@ export const about = {
         },
       ] satisfies EducationItem[],
     },
+    npst: {
+      heading: "At NPST",
+      fill: "sage" as Accent,
+      items: [
+        "Authentication & access control — 54-feature banking platform, OTP and biometric login, 3 admin roles, maker-checker approval",
+        "Bill-splitting product — built in a 2-day assessment, automated per-member balances and clear error handling, met all 6 core requirements",
+        "Cross-functional rotation — six departments; led problem framing for a 22-member team and aligned differing views into one recommendation",
+      ],
+    },
     research: {
       id: "research",
       heading: "Research",
@@ -172,20 +187,23 @@ export const about = {
           venue:
             "4th International Conference on Innovation in Engineering & Management (ICIEM'26), BIT Noida, 2026",
           status: "Accepted",
+          note: "Turned traffic images into congestion alerts and rerouting advice; YOLOv8 chosen after benchmarking four models at 96.1% mAP@50.",
         },
         {
           title:
             "SmartTraffic AI: A Real-Time Adaptive Traffic Signal Control System",
           authors: "S. Sinha, L. Hota, K. K. Senapati, A. Kumar",
           venue: "IEEE Transactions on Networking, 2026",
-          status: "Submitted",
+          status: "Communicated",
+          note: "A camera-only adaptive signal system cut simulated intersection wait time 38.1% on low-cost hardware.",
         },
         {
           title:
             "SmartTraffic AI for a Real-Time Adaptive Traffic Signal Control System",
           authors: "S. Sinha, L. Hota, K. K. Senapati",
-          venue: "2026 IEEE Future Networks World Forum (FNWF)",
-          status: "Submitted",
+          venue: "2026 IEEE Future Networks World Forum (FNWF), 2026",
+          status: "Communicated",
+          note: "Plain-language local explanations raised operator confidence in AI signal decisions to 87% across 200 feedback rounds.",
         },
       ] satisfies ResearchItem[],
     },
@@ -196,8 +214,9 @@ export const about = {
         "Metric definition",
         "Trade-off analysis",
         "Success criteria",
-        "Communicating technical work to non-technical teams",
-        "SQL & data analysis",
+        "Documentation",
+        "Stakeholder communication",
+        "SQL",
         "Python",
         "PyTorch",
       ],
@@ -220,6 +239,7 @@ export const work = {
   id: "work",
   heading: "Featured work",
   viewCaseStudy: "View case study →",
+  viewCaseStudyShort: "Case study →",
   backLabel: "← Back to work",
   backHref: "/#work",
   items: [
@@ -229,7 +249,7 @@ export const work = {
       fill: "clay",
       icon: "fraud",
       summary:
-        "Compared Isolation Forest, One-Class SVM and autoencoders across precision, recall, F1 and AUC-ROC on ~100K transactions. The real decision wasn't best accuracy — it was where to sit on the precision/recall curve given what a false positive costs a risk team. Shipped as a documented REST API.",
+        "Fraud was 2% of ~100K transactions, so a model that flags nothing scores 98% accuracy. I benchmarked Isolation Forest, One-Class SVM and an autoencoder on precision, recall, F1 and AUC-ROC, then set the threshold by weighing what missed fraud costs against how much review load a risk team can absorb. Shipped as a documented REST API.",
       tags: ["Anomaly Detection", "FastAPI", "Trade-off Analysis"],
       sections: [
         {
@@ -248,7 +268,7 @@ export const work = {
       fill: "teal",
       icon: "traffic",
       summary:
-        "A Deep Q-Network controlling three signal phases from a real-time vision pipeline cut average wait time 30% and raised throughput 25% over a fixed-timer baseline. But operators won't adopt decisions they can't interrogate, so a locally hosted LLaMA 3 layer translates every signal decision into plain language.",
+        "A Deep Q-Network at ~90% detection accuracy cut average wait time 30% and raised throughput 25% over a fixed timer. The next move could have been more tuning. I chose operator adoption instead — a locally hosted LLaMA 3 layer that explains every signal decision in plain language. That version was accepted at ICIEM'26.",
       tags: ["Deep RL", "YOLOv8", "Explainability"],
       sections: [
         {
@@ -262,22 +282,34 @@ export const work = {
       ],
     },
     {
-      slug: "transaction-discrepancies",
-      title: "Catching transaction discrepancies before release",
+      slug: "vibeshelf",
+      title: "Teaching a recommender to learn without overcorrecting",
       fill: "ochre",
-      icon: "integrity",
+      icon: "shelf",
       summary:
-        "On a live UPI platform, transaction data diverged across services and databases. Surfaced and resolved the discrepancies pre-release, protecting integrity for real users. Presented findings and blockers in sprint reviews with Product, QA and Business.",
-      tags: ["Payments", "Data Integrity", "Cross-functional"],
+        "A two-person hackathon build: one search box that takes 'cozy adventure like a Miyazaki film' and returns ranked books, films and games. I led the backend — auth, shelf and list APIs, and the re-ranker that learns from thumbs up and down. The hard part was calibration: adjust too hard and a single rating hijacks every later search.",
+      tags: ["Express.js", "LLM Integration", "Feedback Loops"],
       sections: [
         {
           heading: caseStudyHeadings.context,
-          body: "On a live UPI platform, transaction data diverged across services and databases. Surfaced and resolved the discrepancies pre-release, protecting integrity for real users. Presented findings and blockers in sprint reviews with Product, QA and Business.",
+          body: "Mind the Product's World Product Day hackathon, June 2026 — two people, one weekend. My teammate Chaitanya framed the product: every recommender makes you speak its vocabulary, genres and categories and star ratings, when what people actually say is 'something cozy but not boring'. His reframe was that the failure sits upstream in the input — a translation problem, not a ranking problem. I owned the backend that had to make that idea hold up as a working product: Express.js APIs, authentication, shelves and lists, and the scoring layer turning the model's tags into ranked results across 547 hand-curated books, films and games.",
         },
-        { heading: caseStudyHeadings.decision, body: todo(caseStudyHeadings.decision) },
-        { heading: caseStudyHeadings.choice, body: todo(caseStudyHeadings.choice) },
-        { heading: caseStudyHeadings.cost, body: todo(caseStudyHeadings.cost) },
-        { heading: caseStudyHeadings.outcome, body: todo(caseStudyHeadings.outcome) },
+        {
+          heading: caseStudyHeadings.decision,
+          body: "The engine had to learn from its users. A thumbs up or down on a result adjusts the weight of the tags attached to it, so the next search leans toward what someone liked. The open question was how hard to adjust. Weight a single rating heavily and the engine learns fast — but one thumbs-down on a horror title can strip horror out of every later search, including the ones where the user wanted it. Weight it lightly and the loop is decorative: people rate things, nothing visibly changes, and they stop rating.",
+        },
+        {
+          heading: caseStudyHeadings.choice,
+          body: "I tuned the adjustment deliberately low and made the effect cumulative rather than immediate — several consistent signals move the ranking, one outlier doesn't. The reasoning was about trust more than accuracy. A recommender that visibly overreacts to a single click feels broken in a way a slightly slow one doesn't: a user who watches a whole category disappear concludes the system is wrong, while a user who sees results drift gradually concludes it's learning. The LLM layer needed the same defensive posture — Llama 3.3-70B returned JSON that was mostly well-formed and occasionally not, so the backend parses loosely and falls back instead of failing the request.",
+        },
+        {
+          heading: caseStudyHeadings.cost,
+          body: "Slow learning barely shows inside a single session, which is exactly the window a hackathon demo lives in — five minutes of use reveals no personalisation at all. State lived in memory, so shelves and taste profiles didn't survive a restart; that was a deliberate cut to ship in the time available and the first thing that would need a real database behind it. And we never put it in front of users. Everything was internal testing by the two of us, so 'feels broken' is my judgement, not observed behaviour.",
+        },
+        {
+          heading: caseStudyHeadings.outcome,
+          body: "A live engine that handles messy input — typos, vague moods, franchise references — matching against 547 titles and returning 192 ranked results per search, with authentication, saved shelves, named lists, a taste radar chart and a social layer, all running on free infrastructure. What I took from it: AI product work is mostly prompt structure and defensive handling rather than model intelligence. Also a more practical lesson — GitHub's secret scanning caught an exposed API key mid-build, which is a mistake you only make once.",
+        },
       ],
     },
   ] satisfies WorkItem[],

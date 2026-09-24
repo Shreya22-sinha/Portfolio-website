@@ -22,7 +22,7 @@ export function Hero() {
                 key={tag.label}
                 className={`shrink-0 ${index === 0 ? "md:-rotate-[1.2deg]" : ""}`.trim()}
               >
-                <Tag fill={tag.fill} press>
+                <Tag fill={tag.fill} href={tag.href} press>
                   {tag.label}
                 </Tag>
               </li>

@@ -7,6 +7,7 @@ type CardProps = {
   className?: string;
   as?: ElementType;
   press?: boolean;
+  id?: string;
 };
 
 export function Card({
@@ -15,9 +16,11 @@ export function Card({
   className = "",
   as: Tag = "div",
   press = true,
+  id,
 }: CardProps) {
   return (
     <Tag
+      id={id}
       className={`frame ${press ? "press" : ""} ${bgClass[fill]} ${className}`.trim()}
     >
       {children}
