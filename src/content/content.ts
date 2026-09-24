@@ -408,7 +408,7 @@ export const work = {
       sections: [
         {
           heading: caseStudyHeadings.context,
-          body: "Mind the Product's World Product Day hackathon, June 2026 — two people, one weekend. My teammate Chaitanya framed the product: every recommender makes you speak its vocabulary, genres and categories and star ratings, when what people actually say is 'something cozy but not boring'. His reframe was that the failure sits upstream in the input — a translation problem, not a ranking problem. I owned the backend that had to make that idea hold up as a working product: Express.js APIs, authentication, shelves and lists, and the scoring layer turning the model's tags into ranked results across 547 hand-curated books, films and games.",
+          body: "Mind the Product's World Product Day hackathon, June 2026 — two people, one weekend. My teammate framed the product: every recommender makes you speak its vocabulary, genres and categories and star ratings, when what people actually say is 'something cozy but not boring'. The reframe was that the failure sits upstream in the input — a translation problem, not a ranking problem. I owned the backend that had to make that idea hold up as a working product: Express.js APIs, authentication, shelves and lists, and the scoring layer turning the model's tags into ranked results across 547 hand-curated books, films and games.",
           figures: [
             {
               kind: "grid",
