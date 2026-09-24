@@ -27,6 +27,12 @@ export type ResearchItem = {
   note: string;
 };
 
+export type WorkLink = {
+  label: string;
+  url: string;
+  primary?: boolean;
+};
+
 export type WorkItem = {
   slug: string;
   title: string;
@@ -35,6 +41,7 @@ export type WorkItem = {
   summary: string;
   tags: string[];
   sections: CaseStudySection[];
+  links?: WorkLink[];
 };
 
 export type CaseStudyImage = {
@@ -129,6 +136,9 @@ export const site = {
   skipToContent: "Skip to content",
   portrait: {
     src: "/portrait.jpg",
+    heroSrc: "/portrait-v2.png",
+    heroWidth: 312,
+    heroHeight: 390,
     alt: "Portrait of Shreya Sinha",
     fallbackLabel: "Portrait",
   },
@@ -288,6 +298,8 @@ export const work = {
   viewCaseStudyShort: "Case study →",
   backLabel: "← Back to work",
   backHref: "/#work",
+  linksLabel: "Links",
+  linkNewTab: "opens in a new tab",
   items: [
     {
       slug: "fraud-detection",
@@ -382,6 +394,17 @@ export const work = {
       summary:
         "A two-person hackathon build: one search box that takes 'cozy adventure like a Miyazaki film' and returns ranked books, films and games. I led the backend — auth, shelf and list APIs, and the re-ranker that learns from thumbs up and down. The hard part was calibration: adjust too hard and a single rating hijacks every later search.",
       tags: ["Express.js", "LLM Integration", "Feedback Loops"],
+      links: [
+        {
+          label: "Devpost",
+          url: "https://devpost.com/software/vibeshelf",
+          primary: true,
+        },
+        {
+          label: "Walkthrough",
+          url: "https://www.youtube.com/watch?v=SkdTvkQf1ZI",
+        },
+      ],
       sections: [
         {
           heading: caseStudyHeadings.context,

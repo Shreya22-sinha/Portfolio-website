@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Tag } from "@/components/ui/Tag";
 
 function hasPortraitFile() {
-  return existsSync(path.join(process.cwd(), "public", "portrait.jpg"));
+  return existsSync(path.join(process.cwd(), "public", "portrait-v2.png"));
 }
 
 export function Hero() {
@@ -14,7 +14,7 @@ export function Hero() {
 
   return (
     <section id="hero" className="section" aria-labelledby="hero-name">
-      <div className="section-inner grid min-w-0 items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+      <div className="section-inner grid min-w-0 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10">
         <div className="min-w-0">
           <ul className="mb-8 flex w-full min-w-0 flex-wrap gap-x-3 gap-y-3.5">
             {hero.tags.map((tag, index) => (
@@ -56,7 +56,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[260px] pr-4 pb-4 md:max-w-[340px]">
+        <div className="mx-auto w-full max-w-[220px] pr-4 pb-4 md:max-w-[260px]">
           <div className="md:rotate-[1.3deg]">
             <div className="relative">
               <div
@@ -66,14 +66,14 @@ export function Hero() {
               <div className="frame press relative overflow-hidden bg-paper">
                 {showPortrait ? (
                   <Image
-                    src={site.portrait.src}
+                    src={site.portrait.heroSrc}
                     alt={site.portrait.alt}
-                    width={340}
-                    height={425}
+                    width={site.portrait.heroWidth}
+                    height={site.portrait.heroHeight}
                     quality={90}
                     priority
-                    sizes="(max-width: 768px) 260px, 340px"
-                    className="aspect-[4/5] h-auto w-full object-cover object-[center_30%]"
+                    sizes="(max-width: 768px) 220px, 260px"
+                    className="aspect-[4/5] h-auto w-full object-cover"
                   />
                 ) : (
                   <div

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { work, type CaseStudyFigure, type WorkItem } from "@/content/content";
 import { Figure } from "@/components/ui/Figure";
 import { FigureRow } from "@/components/ui/FigureRow";
+import { LinkRail } from "@/components/ui/LinkRail";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Tag } from "@/components/ui/Tag";
 import { bgClass } from "@/components/ui/accents";
@@ -11,9 +12,14 @@ type CaseStudyProps = {
 };
 
 export function CaseStudy({ item }: CaseStudyProps) {
+  const links = item.links ?? [];
+  const hasLinks = links.length > 0;
+
   return (
     <article className="section">
-      <div className="section-inner max-w-3xl">
+      <div
+        className={`section-inner ${hasLinks ? "max-w-3xl lg:max-w-[65rem]" : "max-w-3xl"}`}
+      >
         <p className="mb-8">
           <Link href={work.backHref} className="eyebrow">
             {work.backLabel}
@@ -34,23 +40,48 @@ export function CaseStudy({ item }: CaseStudyProps) {
           {item.title}
         </SectionHeading>
 
-        <div className="flex flex-col gap-10">
-          {item.sections.map((section) => (
-            <section key={section.heading} aria-labelledby={slugify(section.heading)}>
-              <h2
-                id={slugify(section.heading)}
-                className="font-display mb-3 text-2xl leading-tight"
+        {hasLinks ? (
+          <div className="mb-10 lg:hidden">
+            <LinkRail links={links} accent={item.fill} orientation="row" />
+          </div>
+        ) : null}
+
+        <div
+          className={
+            hasLinks
+              ? "grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,48rem)_15rem] lg:items-stretch lg:gap-8"
+              : "flex flex-col gap-10"
+          }
+        >
+          <div className="flex min-w-0 flex-col gap-10">
+            {item.sections.map((section) => (
+              <section
+                key={section.heading}
+                aria-labelledby={slugify(section.heading)}
               >
-                {section.heading}
-              </h2>
-              <p className="prose-body text-base">{section.body}</p>
-              {section.figures?.map((figure, index) => (
-                <div key={`${section.heading}-${index}`} className="mt-6">
-                  <CaseStudyFigures figure={figure} />
-                </div>
-              ))}
-            </section>
-          ))}
+                <h2
+                  id={slugify(section.heading)}
+                  className="font-display mb-3 text-2xl leading-tight"
+                >
+                  {section.heading}
+                </h2>
+                <p className="prose-body text-base">{section.body}</p>
+                {section.figures?.map((figure, index) => (
+                  <div key={`${section.heading}-${index}`} className="mt-6">
+                    <CaseStudyFigures figure={figure} />
+                  </div>
+                ))}
+              </section>
+            ))}
+          </div>
+
+          {hasLinks ? (
+            <aside className="hidden min-w-0 lg:block">
+              <div className="sticky top-[5.75rem]">
+                <LinkRail links={links} accent={item.fill} orientation="stack" />
+              </div>
+            </aside>
+          ) : null}
         </div>
       </div>
     </article>
