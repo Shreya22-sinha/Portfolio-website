@@ -20,20 +20,18 @@ const workSans = Work_Sans({
   display: "swap",
 });
 
-const metadataBase =
-  site.url !== "TODO" && site.url.startsWith("http")
-    ? new URL(site.url)
-    : undefined;
+const metadataBase = new URL(site.url);
+const ogImage = new URL(site.portrait.src, site.url).toString();
 
 export const metadata: Metadata = {
+  metadataBase,
   title: {
     default: site.title,
     template: `%s — ${site.name}`,
   },
   description: site.description,
-  ...(metadataBase ? { metadataBase } : {}),
   alternates: {
-    canonical: metadataBase ? "/" : undefined,
+    canonical: "/",
   },
   openGraph: {
     title: site.title,
@@ -41,14 +39,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: site.locale,
     siteName: site.name,
-    images: [{ url: site.portrait.src }],
-    ...(metadataBase ? { url: metadataBase } : {}),
+    url: site.url,
+    images: [{ url: ogImage }],
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
-    images: [site.portrait.src],
+    images: [ogImage],
   },
 };
 

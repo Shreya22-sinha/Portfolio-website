@@ -102,7 +102,7 @@ export const caseStudyMedia = {
 
 export type ContactLink = {
   label: string;
-  href: string | null;
+  href: string;
 };
 
 export type IconName =
@@ -121,13 +121,10 @@ export const site = {
   title: "Shreya Sinha — Product, Payments & Applied AI",
   description:
     "Product-minded engineer working on banking platform access control and applied AI — and the trade-offs behind both.",
-  /** Replace with the production origin before launch. */
-  url: "TODO",
+  url: "https://shreya-sinha.vercel.app",
   email: "shreyasinha22052003@gmail.com",
-  /** Replace with the public LinkedIn profile URL. */
-  linkedin: null as string | null,
-  /** Replace with the public GitHub profile URL. */
-  github: null as string | null,
+  linkedin: "https://www.linkedin.com/in/shreya-sinha-927626225/",
+  github: "https://github.com/Shreya22-sinha",
   resumeHref: "/shreya-sinha-resume-v2.pdf",
   locale: "en_IN",
   skipToContent: "Skip to content",
@@ -482,10 +479,6 @@ export function getWorkBySlug(slug: string): WorkItem | undefined {
 }
 
 export function personJsonLd() {
-  const sameAs = [site.linkedin, site.github].filter(
-    (href): href is string => href != null && href.startsWith("http"),
-  );
-
   return {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -497,7 +490,7 @@ export function personJsonLd() {
     },
     description: site.description,
     email: site.email,
-    ...(site.url !== "TODO" ? { url: site.url } : {}),
-    ...(sameAs.length > 0 ? { sameAs } : {}),
+    url: site.url,
+    sameAs: [site.linkedin, site.github],
   };
 }
