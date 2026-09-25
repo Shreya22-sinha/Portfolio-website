@@ -1,0 +1,99 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { contact } from "@/content/content";
+
+export function EmailContact() {
+  const { address, href, copyLabel, copiedLabel, copyAria } = contact.email;
+  const [copied, setCopied] = useState(false);
+  const addressRef = useRef<HTMLAnchorElement>(null);
+  const copiedTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimer.current !== null) {
+        window.clearTimeout(copiedTimer.current);
+      }
+    };
+  }, []);
+
+  function flashCopied() {
+    setCopied(true);
+    if (copiedTimer.current !== null) {
+      window.clearTimeout(copiedTimer.current);
+    }
+    copiedTimer.current = window.setTimeout(() => {
+      setCopied(false);
+      copiedTimer.current = null;
+    }, 2000);
+  }
+
+  function selectAddress() {
+    const node = addressRef.current;
+    if (!node) {
+      return;
+    }
+    node.focus();
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  }
+
+  function copyWithTextarea() {
+    const textarea = document.createElement("textarea");
+    textarea.value = address;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(textarea);
+    if (!ok) {
+      throw new Error("execCommand copy failed");
+    }
+  }
+
+  async function copyAddress() {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(address);
+      } else {
+        copyWithTextarea();
+      }
+      flashCopied();
+    } catch {
+      try {
+        copyWithTextarea();
+        flashCopied();
+      } catch {
+        selectAddress();
+      }
+    }
+  }
+
+  return (
+    <div className="frame press flex min-w-0 items-center justify-between gap-2 bg-paper px-4 py-4">
+      <a
+        ref={addressRef}
+        href={href}
+        className="min-w-0 flex-1 break-all text-xs font-semibold leading-snug"
+      >
+        {address}
+      </a>
+      <button
+        type="button"
+        aria-label={copyAria}
+        className="eyebrow shrink-0"
+        onClick={copyAddress}
+      >
+        {copied ? copiedLabel : copyLabel}
+      </button>
+      <span aria-live="polite" className="sr-only">
+        {copied ? copiedLabel : ""}
+      </span>
+    </div>
+  );
+}

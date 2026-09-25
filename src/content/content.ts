@@ -466,11 +466,14 @@ export const contact = {
   id: "contact",
   heading: "Contact",
   body: "The fastest way to reach me is email. I read every note.",
+  email: {
+    address: site.email,
+    href: `mailto:${site.email}?subject=Portfolio%20enquiry`,
+    copyLabel: "Copy",
+    copiedLabel: "Copied",
+    copyAria: "Copy email address",
+  },
   links: [
-    {
-      label: "Email",
-      href: `mailto:${site.email}`,
-    },
     {
       label: "LinkedIn",
       href: site.linkedin,
