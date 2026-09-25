@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { contact } from "@/content/content";
 
 export function EmailContact() {
-  const { address, href, copyLabel, copiedLabel, copyAria } = contact.email;
+  const { label, address, href, linkAria, copyLabel, copiedLabel, copyAria } =
+    contact.email;
+  const at = address.indexOf("@");
+  const local = at === -1 ? address : address.slice(0, at);
+  const domain = at === -1 ? "" : address.slice(at);
   const [copied, setCopied] = useState(false);
   const addressRef = useRef<HTMLAnchorElement>(null);
   const copiedTimer = useRef<number | null>(null);
@@ -75,14 +79,22 @@ export function EmailContact() {
   }
 
   return (
-    <div className="frame press flex min-w-0 items-center justify-between gap-2 bg-paper px-4 py-4">
-      <a
-        ref={addressRef}
-        href={href}
-        className="min-w-0 flex-1 break-all text-xs font-semibold leading-snug"
-      >
-        {address}
-      </a>
+    <div className="frame press flex h-full min-w-0 items-center justify-between gap-3 bg-paper px-4 py-4">
+      <div className="min-w-0 flex-1">
+        <p className="eyebrow">{label}</p>
+        <a
+          ref={addressRef}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={linkAria}
+          className="mt-1 block text-xs font-semibold leading-snug [overflow-wrap:anywhere]"
+        >
+          {local}
+          <wbr />
+          {domain}
+        </a>
+      </div>
       <button
         type="button"
         aria-label={copyAria}

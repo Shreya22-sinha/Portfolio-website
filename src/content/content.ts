@@ -467,8 +467,10 @@ export const contact = {
   heading: "Contact",
   body: "The fastest way to reach me is email. I read every note.",
   email: {
+    label: "Email",
     address: site.email,
-    href: `mailto:${site.email}?subject=Portfolio%20enquiry`,
+    href: `https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}&su=Portfolio%20enquiry`,
+    linkAria: "Email Shreya Sinha (opens Gmail in a new tab)",
     copyLabel: "Copy",
     copiedLabel: "Copied",
     copyAria: "Copy email address",
