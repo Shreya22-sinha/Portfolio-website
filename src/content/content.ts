@@ -131,7 +131,7 @@ export const site = {
   email: "shreyasinha22052003@gmail.com",
   linkedin: "https://www.linkedin.com/in/shreya-sinha-927626225/",
   github: "https://github.com/Shreya22-sinha",
-  resumeHref: "/shreya-sinha-resume-v2.pdf",
+  resumeHref: "/shreya-sinha-resume-v3.pdf",
   locale: "en_IN",
   skipToContent: "Skip to content",
   portrait: {
